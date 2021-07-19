@@ -51,9 +51,9 @@ namespace TodoServer.Controllers
         }
 
         [HttpPut("{id:length(24)}")]
-        [ProducesResponseType(204)]
+        [ProducesResponseType(typeof(IUpdatedTodoItem), 200)]
         [ProducesResponseType(404)]
-        public IActionResult Update(string id, TodoItem todoIn)
+        public ActionResult<IUpdatedTodoItem> Update(string id, TodoItem todoIn)
         {
             var todo = _todoService.Get(id);
 
@@ -62,7 +62,7 @@ namespace TodoServer.Controllers
                 return NotFound();
             }
 
-            _todoService.Update(id, new TodoItem
+            var updated = new TodoItem
             {
                 Id = todo.Id,
                 DateLastModified = DateTime.Now,
@@ -70,8 +70,15 @@ namespace TodoServer.Controllers
                 Title = todoIn.Title,
                 IsDone = todoIn.IsDone,
                 DueDate = todoIn.DueDate,
+            };
+
+            _todoService.Update(id, updated);
+
+            return Ok(new UpdatedTodoItem
+            {
+                Id = updated.Id,
+                DateLastModified = updated.DateLastModified,
             });
-            return NoContent();
         }
 
         [HttpDelete("{id:length(24)}")]
