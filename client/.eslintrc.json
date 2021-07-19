@@ -1,0 +1,15 @@
+{
+  "root": true,
+  "extends": [
+    "@neilbryson"
+  ],
+  "plugins": [
+    "simple-import-sort"
+  ],
+  "env": {
+    "browser": true
+  },
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  }
+}
