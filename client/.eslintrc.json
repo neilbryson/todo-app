@@ -11,5 +11,19 @@
   },
   "parserOptions": {
     "project": "./tsconfig.json"
+  },
+  "rules": {
+    "@typescript-eslint/no-duplicate-imports": "error",
+    "@typescript-eslint/quotes": ["warn", "single", { "allowTemplateLiterals": true }],
+    "@typescript-eslint/semi": "warn",
+    "comma-dangle": "off",
+    "indent": "off",
+    "no-console": "error",
+    "no-duplicate-imports": "off",
+    "quotes": "off",
+    "semi": "off",
+    "simple-import-sort/exports": "warn",
+    "simple-import-sort/imports": "warn",
+    "sort-imports": "off"
   }
 }
