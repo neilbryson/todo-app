@@ -33,3 +33,5 @@ dotnet run
 ```
 
 This starts the development server at https://localhost:5001.
+
+NOTE : Don't forget to start the MongoDB instance.
