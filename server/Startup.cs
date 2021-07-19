@@ -10,6 +10,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using TodoServer.Models;
+using TodoServer.Services;
 using TodoServer.Utilities;
 
 namespace TodoServer
@@ -26,6 +28,13 @@ namespace TodoServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<TodoDatabaseSettings>(Configuration.GetSection(nameof(TodoDatabaseSettings)));
+
+            services.AddSingleton<ITodoDatabaseSettings>(provider =>
+                provider.GetRequiredService<IOptions<TodoDatabaseSettings>>().Value);
+
+            services.AddSingleton<TodoService>();
+
             services.AddApiVersioning(options =>
             {
                 options.ReportApiVersions = true;
@@ -40,7 +49,10 @@ namespace TodoServer
                 options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer()));
             });
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(options =>
+            {
+                options.EnableAnnotations();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

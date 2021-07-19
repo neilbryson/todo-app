@@ -3,6 +3,7 @@
 ## Requirements
 
 * [.NET 5.0](https://dotnet.microsoft.com/download/dotnet/5.0)
+* [MongoDB Community Edition](https://docs.mongodb.com/manual/administration/install-community/)
 
 ## Starting the development server
 
