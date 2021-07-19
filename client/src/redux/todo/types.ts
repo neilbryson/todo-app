@@ -27,10 +27,10 @@ export const enum ThunkActions {
 
 // Should be similar to server/TodoServer.Models.TodoItem
 export interface TodoItem {
-  _id: string;
   dateLastModified: string;
   description: string;
   dueDate: string;
+  id: string;
   isDone: boolean;
   title: string;
 }
@@ -47,7 +47,7 @@ export type WhichTodoItem<ShowAll extends boolean> = ShowAll extends true ? Todo
 export type SetDisplay = Action<LocalActions.SET_DISPLAY, TodoDisplay>;
 
 // Thunk actions
-export type AddTodoStart = Action<ThunkActions.ADD_TODO_START, Omit<TodoItem, '_id' | 'dateLastModified'>>;
+export type AddTodoStart = Action<ThunkActions.ADD_TODO_START, Omit<TodoItem, 'id' | 'dateLastModified'>>;
 export type AddTodoSuccess = Action<ThunkActions.ADD_TODO_SUCCESS, TodoItem>;
 export type AddTodoError = Action<ThunkActions.ADD_TODO_ERROR>;
 
@@ -57,7 +57,7 @@ export type DeleteTodoError = Action<ThunkActions.DELETE_TODO_ERROR>;
 
 export type EditTodoStart = Action<
   ThunkActions.EDIT_TODO_START,
-  { id: string; todo: Omit<TodoItem, '_id' | 'dateLastModified'> }
+  { id: string; todo: Omit<TodoItem, 'id' | 'dateLastModified'> }
 >;
 export type EditTodoSuccess = Action<ThunkActions.EDIT_TODO_SUCCESS, TodoItem>;
 export type EditTodoError = Action<ThunkActions.EDIT_TODO_ERROR>;

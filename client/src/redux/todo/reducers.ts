@@ -11,8 +11,8 @@ export function todo(state = initialState, action: TodoActions): TodoState {
     case ThunkActions.ADD_TODO_SUCCESS:
       return {
         ...state,
-        todoIds: [...state.todoIds, action.payload._id],
-        todoList: { ...state.todoList, [action.payload._id]: action.payload },
+        todoIds: [...state.todoIds, action.payload.id],
+        todoList: { ...state.todoList, [action.payload.id]: action.payload },
       };
     case ThunkActions.DELETE_TODO_SUCCESS: {
       const todoIds = state.todoIds.filter((id) => id !== action.payload);
@@ -25,8 +25,8 @@ export function todo(state = initialState, action: TodoActions): TodoState {
     case ThunkActions.GET_TODO_LIST_SUCCESS: {
       const { todoIds = [], todoList = {} } = action.payload.reduce<Pick<TodoState, 'todoIds' | 'todoList'>>(
         (prev, curr) => {
-          prev.todoIds.push(curr._id);
-          prev.todoList[curr._id] = curr;
+          prev.todoIds.push(curr.id);
+          prev.todoList[curr.id] = curr;
           return prev;
         },
         { todoIds: [], todoList: {} }

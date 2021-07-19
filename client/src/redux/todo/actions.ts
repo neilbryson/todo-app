@@ -11,7 +11,7 @@ export const setDisplay = (displayType: types.TodoDisplay): types.TodoActions =>
 
 // Thunk actions
 export function addTodo(
-  todo: Omit<TodoItem, '_id' | 'dateLastModified'>
+  todo: Omit<TodoItem, 'id' | 'dateLastModified'>
 ): ThunkAction<types.AddTodoStart | types.AddTodoSuccess | types.AddTodoError> {
   return async (dispatch) => {
     dispatch({ type: types.ThunkActions.ADD_TODO_START, payload: todo });
@@ -42,13 +42,13 @@ export function deleteTodo(
 
 export function editTodo(
   id: string,
-  todo: Omit<TodoItem, '_id' | 'dateLastModified'>
+  todo: Omit<TodoItem, 'id' | 'dateLastModified'>
 ): ThunkAction<types.EditTodoStart | types.EditTodoSuccess | types.EditTodoError> {
   return async (dispatch) => {
     dispatch({ type: types.ThunkActions.EDIT_TODO_START, payload: { id, todo } });
 
     try {
-      const { data } = await api<Pick<TodoItem, '_id' | 'dateLastModified'>>({
+      const { data } = await api<Pick<TodoItem, 'id' | 'dateLastModified'>>({
         data: todo,
         url: `/api/v1/todo/${id}`,
         method: 'put',
