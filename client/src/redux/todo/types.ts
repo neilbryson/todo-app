@@ -25,7 +25,7 @@ export const enum ThunkActions {
   GET_TODO_LIST_ERROR = '@todo/GET_TODO_LIST_ERROR',
 }
 
-// Should be similar to server/TodoServer.Models.TodoItem
+// Should be similar to server/TodoServer.Models.Todo
 export interface TodoItem {
   dateLastModified: string;
   description: string;
