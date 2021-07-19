@@ -28,6 +28,8 @@ namespace TodoServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
+
             services.Configure<TodoDatabaseSettings>(Configuration.GetSection(nameof(TodoDatabaseSettings)));
 
             services.AddSingleton<ITodoDatabaseSettings>(provider =>
@@ -60,6 +62,12 @@ namespace TodoServer
         {
             if (env.IsDevelopment())
             {
+                app.UseCors(builder =>
+                {
+                    builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                });
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(options =>
