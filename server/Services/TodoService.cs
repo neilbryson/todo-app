@@ -16,7 +16,7 @@ namespace TodoServer.Services
             _todo = db.GetCollection<TodoItem>(settings.TodoCollectionName);
         }
 
-        public List<TodoItem> Get(int sortBy = 1, int pageNumber = 10, int pageSize = 1)
+        public List<TodoItem> Get(int sortBy = 1, int pageNumber = 1, int pageSize = 10)
         {
             var find = _todo.Find(todo => true);
 
