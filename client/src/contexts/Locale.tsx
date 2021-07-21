@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import React, { createContext, ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
 
+import { LOCALE_KEY } from '../constants/storageKeys';
 import defaultLocale from '../i18n/locale/en.json';
 import { DEFAULT_LOCALE_CODE, getLocaleCollection, t } from '../utilities/locale';
 
@@ -40,7 +41,7 @@ export const LocaleProvider = ({ children }: LocaleProviderProps): ReturnType<ty
   }, []);
 
   useEffect(() => {
-    window.localStorage.setItem('todo-locale', localeCode);
+    window.localStorage.setItem(LOCALE_KEY, localeCode);
     getLocaleCollection()
       .then(([loc, lang]) => {
         dayjs.locale(loc);
@@ -49,7 +50,7 @@ export const LocaleProvider = ({ children }: LocaleProviderProps): ReturnType<ty
       .catch(() => {
         dayjs.locale(DEFAULT_LOCALE_CODE);
         setLanguage(defaultLocale);
-        window.localStorage.removeItem('todo-locale');
+        window.localStorage.removeItem(LOCALE_KEY);
       });
   }, [localeCode]);
 

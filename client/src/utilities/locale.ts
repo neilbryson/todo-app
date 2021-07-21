@@ -1,5 +1,6 @@
 import { vsprintf } from 'sprintf-js';
 
+import { LOCALE_KEY } from '../constants/storageKeys';
 import defaultLocale from '../i18n/locale/en.json';
 
 export const supportedLocaleCodes = ['en', 'fr'];
@@ -7,7 +8,7 @@ export const DEFAULT_LOCALE_CODE = 'en';
 
 export function getLocaleCode(supportedLang = supportedLocaleCodes): string {
   let localeCode: string;
-  const fromStorage = window.localStorage.getItem('todo-locale');
+  const fromStorage = window.localStorage.getItem(LOCALE_KEY);
   if (fromStorage) localeCode = fromStorage;
   else if (navigator.language) localeCode = navigator.language;
   else return DEFAULT_LOCALE_CODE;
