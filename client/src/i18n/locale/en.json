@@ -1,5 +1,5 @@
 {
   "app_title": "Todo",
-  "due_date": "Due %s",
-  "last_modified_date": "Last modified %s"
+  "due_date": "Due",
+  "last_modified_date": "Last modified"
 }
