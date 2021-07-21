@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MongoDB.Driver;
 using TodoServer.Models;
 
@@ -15,7 +16,20 @@ namespace TodoServer.Services
             _todo = db.GetCollection<TodoItem>(settings.TodoCollectionName);
         }
 
-        public List<TodoItem> Get() => _todo.Find(todo => true).ToList();
+        public List<TodoItem> Get(int sortBy = 1, int pageNumber = 10, int pageSize = 1)
+        {
+            var find = _todo.Find(todo => true);
+
+            if (sortBy == 1)
+                find.SortByDescending(field => field.DateLastModified);
+            else
+                find.SortBy(field => field.DateLastModified);
+
+            if (pageSize > 0)
+                find.Limit(pageSize).Skip(pageSize * pageNumber);
+
+            return find.ToList();
+        }
 
         public TodoItem Get(string id) => _todo.Find<TodoItem>(todo => todo.Id == id).FirstOrDefault();
 

@@ -24,7 +24,13 @@ namespace TodoServer.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<TodoItem>> Get() => _todoService.Get();
+        public ActionResult<List<TodoItem>> Get([FromQuery] FilterOptions filterOptions)
+        {
+            var sortBy = filterOptions?.SortBy ?? 1;
+            var pageSize = filterOptions?.PageSize ?? 10;
+            var pageNumber = filterOptions?.PageNumber ?? 1;
+            return _todoService.Get(sortBy, pageNumber, pageSize);
+        }
 
         [HttpGet("{id:length(24)}", Name = "GetTodo")]
         [ProducesResponseType(typeof(TodoItem), 200)]
