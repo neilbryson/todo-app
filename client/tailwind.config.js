@@ -14,7 +14,10 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      fontWeight: ['hover'],
+      margin: ['last'],
+    },
   },
   plugins: [],
 };

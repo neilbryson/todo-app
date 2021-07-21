@@ -1,4 +1,5 @@
 import './styles/index.css';
+import 'dayjs/locale/fr';
 
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
