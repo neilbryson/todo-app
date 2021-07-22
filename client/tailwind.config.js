@@ -16,7 +16,7 @@ module.exports = {
   variants: {
     extend: {
       fontWeight: ['hover'],
-      margin: ['last'],
+      margin: ['first', 'last'],
     },
   },
   plugins: [],

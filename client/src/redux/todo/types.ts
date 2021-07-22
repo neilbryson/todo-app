@@ -25,7 +25,7 @@ export const enum ThunkActions {
   GET_TODO_LIST_ERROR = '@todo/GET_TODO_LIST_ERROR',
 }
 
-// Should be similar to server/TodoServer.Models.Todo
+// Should be similar to server/TodoServer.Models.TodoPreview
 export interface TodoItem {
   dateLastModified: string;
   description: string;
@@ -35,8 +35,11 @@ export interface TodoItem {
   title: string;
 }
 
+export type TodoPriority = Record<'today' | 'overdue' | 'tomorrow' | 'other', string[]>;
+
 export interface TodoState {
   displayType: TodoDisplay;
+  todoPriority: TodoPriority;
   todoIds: string[];
   todoList: Record<string, TodoItem>;
 }

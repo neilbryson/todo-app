@@ -1,5 +1,9 @@
 {
   "app_title": "Todo",
   "due_date": "Due",
-  "last_modified_date": "Last modified"
+  "last_modified_date": "Last modified",
+  "other_todo": "Other todo items",
+  "overdue": "Overdue",
+  "today": "Today",
+  "tomorrow": "Tomorrow"
 }
