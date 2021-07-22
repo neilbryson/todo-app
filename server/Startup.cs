@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -54,6 +56,15 @@ namespace TodoServer
             services.AddSwaggerGen(options =>
             {
                 options.EnableAnnotations();
+            });
+
+            services.AddLogging(options =>
+            {
+                options.AddSimpleConsole(opt =>
+                {
+                    opt.TimestampFormat = "[yyyy-MM-dd HH:mm:ss] ";
+                    opt.ColorBehavior = LoggerColorBehavior.Enabled;
+                });
             });
         }
 
