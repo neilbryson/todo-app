@@ -1,10 +1,10 @@
-import React, { ReactElement, useContext } from 'react';
+import React, { ReactElement } from 'react';
 
-import { LocaleContext } from '../contexts/Locale';
+import { useLocale } from '../contexts/Locale';
 import { supportedLocaleCodes } from '../utilities/locale';
 
 export const LanguageSwitcher = (): ReactElement<HTMLDivElement> => {
-  const { changeLocale, localeCode } = useContext(LocaleContext);
+  const { changeLocale, localeCode } = useLocale();
 
   function changeLocaleCb(code: string): () => void {
     return () => changeLocale(code);

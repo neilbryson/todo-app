@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import React, { createContext, ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 import { LOCALE_KEY } from '../constants/storageKeys';
 import defaultLocale from '../i18n/locale/en.json';
@@ -21,6 +21,8 @@ export const LocaleContext = createContext<LocaleContextProps>({
   localeCode: DEFAULT_LOCALE_CODE,
   t,
 });
+
+export const useLocale = (): LocaleContextProps => useContext(LocaleContext);
 
 export const LocaleProvider = ({ children }: LocaleProviderProps): ReturnType<typeof LocaleContext.Provider> => {
   const [localeCode, setLocaleCode] = useState(DEFAULT_LOCALE_CODE);
