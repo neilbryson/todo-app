@@ -1,14 +1,14 @@
-import React, { ReactElement, ReactNode, useContext, useEffect } from 'react';
+import React, { ReactElement, ReactNode, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { TodoPreview } from '../components/TodoPreview';
-import { LocaleContext } from '../contexts/Locale';
+import { useLocale } from '../contexts/Locale';
 import { useAppSelector } from '../hooks/useAppSelector';
 import { getTodoList } from '../redux/todo/actions';
 
 export const TodoList = (): ReactElement<HTMLDivElement> => {
   const dispatch = useDispatch();
-  const { t } = useContext(LocaleContext);
+  const { t } = useLocale();
   const { todoPriority, todoList } = useAppSelector((state) => ({
     todoPriority: state.todo.todoPriority,
     todoList: state.todo.todoList,
@@ -31,7 +31,7 @@ export const TodoList = (): ReactElement<HTMLDivElement> => {
     if (todoPriority.today.length === 0) return null;
     return renderSection(
       t('today'),
-      todoPriority.today.map((id) => <TodoPreview data={todoList[id]} key={id} />)
+      todoPriority.today.map((id) => <TodoPreview data={todoList[id]} key={id} hideDate />)
     );
   }
 
@@ -39,7 +39,7 @@ export const TodoList = (): ReactElement<HTMLDivElement> => {
     if (todoPriority.tomorrow.length === 0) return null;
     return renderSection(
       t('tomorrow'),
-      todoPriority.tomorrow.map((id) => <TodoPreview data={todoList[id]} key={id} />)
+      todoPriority.tomorrow.map((id) => <TodoPreview data={todoList[id]} key={id} hideDate />)
     );
   }
 
