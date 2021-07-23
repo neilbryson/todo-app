@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 
 import type { RecursiveWritable } from '../../types/Misc';
 
@@ -27,7 +26,8 @@ export function modalReducer(state: ModalState, action: ActionTypes): ModalState
   switch (action.type) {
     case 'ADD': {
       const { content, title } = action.payload;
-      const id = uuidv4();
+      // we'll just use Date.now() here to be as simple as possible
+      const id = Date.now().toString();
       return { modals: { ...state.modals, [id]: { id, content, title } }, modalIds: [...state.modalIds, id] };
     }
     case 'CLOSE': {

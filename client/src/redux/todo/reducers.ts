@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 
-import { ThunkActions, TodoActions, TodoDisplay, TodoItem, TodoState } from './types';
+import { ThunkActions, TodoActions, TodoDisplay, TodoItem, TodoPriority, TodoState } from './types';
 
 const initialState: TodoState = {
   displayType: TodoDisplay.DEFAULT,
@@ -16,12 +16,19 @@ const initialState: TodoState = {
 
 export function todo(state = initialState, action: TodoActions): TodoState {
   switch (action.type) {
-    case ThunkActions.ADD_TODO_SUCCESS:
+    case ThunkActions.ADD_TODO_SUCCESS: {
+      const priority = getDatePriority(action.payload.dueDate);
+      const newTodoPriority = {
+        ...state.todoPriority,
+        [priority]: [...state.todoPriority[priority], action.payload.id],
+      };
       return {
         ...state,
+        todoPriority: newTodoPriority,
         todoIds: [...state.todoIds, action.payload.id],
         todoList: { ...state.todoList, [action.payload.id]: action.payload },
       };
+    }
     case ThunkActions.DELETE_TODO_SUCCESS: {
       const todoIds = state.todoIds.filter((id) => id !== action.payload);
       return {
@@ -39,20 +46,19 @@ export function todo(state = initialState, action: TodoActions): TodoState {
   }
 }
 
-function organiseTodoList(todoItems: TodoItem[]): Omit<TodoState, 'displayType'> {
+function getDatePriority(date: string): keyof TodoPriority {
   const today = dayjs();
+  if (today.isSame(date, 'day')) return 'today';
+  if (today.isBefore(date, 'day') && today.startOf('day').diff(date, 'day') === -1) return 'tomorrow';
+  if (today.isAfter(date, 'day')) return 'overdue';
+  return 'other';
+}
+
+function organiseTodoList(todoItems: TodoItem[]): Omit<TodoState, 'displayType'> {
   const { todoPriority, todoIds, todoList } = todoItems.reduce<Omit<TodoState, 'displayType'>>(
     (prev, curr) => {
-      const [date] = curr.dueDate.split('T');
-      if (today.isSame(date, 'day')) {
-        prev.todoPriority.today.push(curr.id);
-      } else if (today.isBefore(date, 'day') && today.startOf('day').diff(date, 'day') === -1) {
-        prev.todoPriority.tomorrow.push(curr.id);
-      } else if (today.isAfter(date, 'day')) {
-        prev.todoPriority.overdue.push(curr.id);
-      } else {
-        prev.todoPriority.other.push(curr.id);
-      }
+      const datePriority = getDatePriority(curr.dueDate);
+      prev.todoPriority[datePriority].push(curr.id);
       prev.todoIds.push(curr.id);
       prev.todoList[curr.id] = curr;
       return prev;

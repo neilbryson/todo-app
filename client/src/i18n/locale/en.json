@@ -1,10 +1,16 @@
 {
+  "add": "Add",
   "add_task": "Add task",
   "app_title": "Todo",
   "due_date": "Due",
+  "due_date_form": "Due date",
+  "edit_task": "Edit task",
   "last_modified_date": "Last modified",
   "other_todo": "Other todo items",
   "overdue": "Overdue",
+  "task": "Task",
+  "task_details": "Task details",
   "today": "Today",
-  "tomorrow": "Tomorrow"
+  "tomorrow": "Tomorrow",
+  "update": "Update"
 }

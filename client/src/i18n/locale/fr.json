@@ -1,10 +1,16 @@
 {
+  "add": "Ajouter",
   "add_task": "Nouvelle tâche",
   "app_title": "Todo",
-  "due_date": "À faire",
+  "due_date": "À faire le",
+  "due_date_form": "Date prévue",
+  "edit_task": "Modification de la tâche",
   "last_modified_date": "Dernière modification",
   "other_todo": "Toutes les autres tâches",
   "overdue": "En retard",
+  "task": "Titre",
+  "task_details": "Notes",
   "today": "Aujourd'hui",
-  "tomorrow": "Demain"
+  "tomorrow": "Demain",
+  "update": "Mettre à jour"
 }
