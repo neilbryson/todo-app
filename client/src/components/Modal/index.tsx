@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import { useModal } from '../../contexts/Modal';
 import { Modal } from './Modal';
 
-export const Container = (): ReactElement<HTMLDivElement> | null => {
+const ModalContainer = (): ReactElement<HTMLDivElement> | null => {
   const { modals } = useModal();
   const modalRoot = document.getElementById('modal-root');
 
@@ -23,3 +23,5 @@ export const Container = (): ReactElement<HTMLDivElement> | null => {
 
   return ReactDOM.createPortal(render(), modalRoot);
 };
+
+export default ModalContainer;
