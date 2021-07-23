@@ -3,12 +3,14 @@ import { useDispatch } from 'react-redux';
 
 import { TodoPreview } from '../components/TodoPreview';
 import { useLocale } from '../contexts/Locale';
+import { useModal } from '../contexts/Modal';
 import { useAppSelector } from '../hooks/useAppSelector';
 import { getTodoList } from '../redux/todo/actions';
 
 export const TodoList = (): ReactElement<HTMLDivElement> => {
   const dispatch = useDispatch();
   const { t } = useLocale();
+  const { add } = useModal();
   const { todoPriority, todoList } = useAppSelector((state) => ({
     todoPriority: state.todo.todoPriority,
     todoList: state.todo.todoList,

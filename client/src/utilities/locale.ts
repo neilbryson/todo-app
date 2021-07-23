@@ -27,7 +27,7 @@ export async function getLocaleCollection(): Promise<[localeCode: string, locale
 }
 
 export function t(
-  id: string,
+  id: keyof typeof defaultLocale | string,
   values?: string[],
   defaultText?: string,
   lang: Record<string, string> = defaultLocale

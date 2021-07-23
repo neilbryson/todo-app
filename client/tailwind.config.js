@@ -12,6 +12,12 @@ module.exports = {
     fontFamily: {
       sans: ['Comfortaa', 'sans-serif'],
     },
+    extend: {
+      zIndex: {
+        '-1': '-1',
+        '-10': '-10',
+      },
+    },
   },
   variants: {
     extend: {
