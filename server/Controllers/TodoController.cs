@@ -33,17 +33,17 @@ namespace TodoServer.Controllers
             var sortBy = filterOptions?.SortBy ?? 1;
             var pageSize = filterOptions?.PageSize ?? 10;
             var pageNumber = filterOptions?.PageNumber ?? 1;
-            _logger.LogInformation($"[{nameof(Get)}] Called with ${filterOptions.ToJson()}");
+            _logger.LogInformation("[{Get}] Called with {FilterOptions}", nameof(Get), filterOptions.ToJson());
 
             try
             {
                 var result = _todoService.Get(sortBy, pageNumber, pageSize);
-                _logger.LogInformation($"[{nameof(Get)}] Success");
+                _logger.LogInformation("[{Get}] Success", nameof(Get));
                 return result;
             }
             catch (Exception e)
             {
-                _logger.LogError($"[{nameof(Get)}] Error\n{e.Message}");
+                _logger.LogError("[{Get}] Error\n{ErrorMessage}", nameof(Get), e.Message);
                 return Problem();
             }
         }
@@ -53,16 +53,16 @@ namespace TodoServer.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<TodoItem> Get(string id)
         {
-            _logger.LogInformation($"[{nameof(Get)} : {id}] Called");
+            _logger.LogInformation("[{Get} : {Id}] Called", nameof(Get), id);
             var todo = _todoService.Get(id);
 
             if (todo == null)
             {
-                _logger.LogError($"[{nameof(Get)} : {id}] ID not found");
+                _logger.LogError("[{Get} : {Id}] ID not found", nameof(Get), id);
                 return NotFound();
             }
 
-            _logger.LogInformation($"[{nameof(Get)} : {id}] Success");
+            _logger.LogInformation("[{Get} : {Id}] Success", nameof(Get), id);
             return todo;
         }
 
@@ -71,18 +71,18 @@ namespace TodoServer.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<TodoItem> Create(TodoItem todo)
         {
-            _logger.LogInformation($"[{nameof(Create)}] Called");
+            _logger.LogInformation("[{Create}] Called", nameof(Create));
 
             try
             {
                 todo.DateLastModified = DateTime.Now;
                 _todoService.Create(todo);
-                _logger.LogInformation($"[{nameof(Create)}] Created {todo.Id}");
+                _logger.LogInformation("[{Create}] Created {Id}", nameof(Create), todo.Id);
                 return CreatedAtRoute("GetTodo", new {id = todo.Id}, todo);
             }
             catch (Exception e)
             {
-                _logger.LogError($"[{nameof(Create)}] Error\n{e.Message}");
+                _logger.LogError("[{Create}] Error\n{ErrorMessage}", nameof(Create), e.Message);
                 return Problem();
             }
         }
@@ -93,7 +93,7 @@ namespace TodoServer.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<IUpdatedTodoItem> Update(string id, TodoItem todoIn)
         {
-            _logger.LogInformation($"[{nameof(Update)} : {id}] Called");
+            _logger.LogInformation("[{Update} : {Id}] Called", nameof(Update), id);
 
             try
             {
@@ -101,7 +101,7 @@ namespace TodoServer.Controllers
 
                 if (todo == null)
                 {
-                    _logger.LogError($"[{nameof(Update)} : {id}] ID not found");
+                    _logger.LogError("[{Update} : {Id}] ID not found", nameof(Update), id);
                     return NotFound();
                 }
 
@@ -117,7 +117,7 @@ namespace TodoServer.Controllers
 
                 _todoService.Update(id, updated);
 
-                _logger.LogInformation($"[{nameof(Update)} : {id}] Success");
+                _logger.LogInformation("[{Update} : {Id}] Success", nameof(Update), id);
 
                 return Ok(new UpdatedTodoItem
                 {
@@ -127,7 +127,7 @@ namespace TodoServer.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError($"[{nameof(Update)} : {id}] Error\n{e.Message}");
+                _logger.LogError("[{Update} : {Id}] Error\n{ErrorMessage}", nameof(Update), id, e.Message);
                 return Problem();
             }
         }
@@ -138,7 +138,7 @@ namespace TodoServer.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult Delete(string id)
         {
-            _logger.LogInformation($"[{nameof(Delete)} : {id}] Called");
+            _logger.LogInformation("[{Delete} : {Id}] Called", nameof(Delete), id);
 
             try
             {
@@ -146,17 +146,54 @@ namespace TodoServer.Controllers
 
                 if (t == null)
                 {
-                    _logger.LogError($"[{nameof(Delete)} : {id}] ID not found");
+                    _logger.LogError("[{Delete} : {Id}] ID not found", nameof(Delete), id);
                     return NotFound();
                 }
 
                 _todoService.Delete(t.Id);
-                _logger.LogInformation($"[{nameof(Delete)} : {id}] Success");
+                _logger.LogInformation("[{Delete} : {Id}] Success", nameof(Delete), id);
                 return NoContent();
             }
             catch (Exception e)
             {
-                _logger.LogError($"[{nameof(Delete)} : {id}] Error\n{e.Message}");
+                _logger.LogError("[{Delete} : {Id}] Error\n{ErrorMessage}", nameof(Delete), id, e.Message);
+                return Problem();
+            }
+        }
+
+        [HttpPatch("change-done/{id:length(24)}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult ChangeDone(string id, bool isDone)
+        {
+            _logger.LogInformation("[{ChangeDone} : {Id}] Called", nameof(ChangeDone), id);
+
+            try
+            {
+                var t = _todoService.Get(id);
+
+                if (t == null)
+                {
+                    _logger.LogError("[{ChangeDone} : {Id}]", nameof(ChangeDone), id);
+                    return NoContent();
+                }
+
+                _todoService.Update(id, new TodoItem
+                {
+                    Id = t.Id,
+                    Description = t.Description,
+                    Title = t.Title,
+                    DueDate = t.DueDate,
+                    DateLastModified = t.DateLastModified,
+                    IsDone = isDone,
+                });
+                _logger.LogInformation("[{ChangeDone} : {Id}] Success", nameof(ChangeDone), id);
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("[{ChangeDone} : {Id}] Error\n{ErrorMessage}", nameof(ChangeDone), id, e.Message);
                 return Problem();
             }
         }
