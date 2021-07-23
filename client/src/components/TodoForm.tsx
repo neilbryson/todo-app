@@ -70,7 +70,9 @@ export const TodoForm = ({ data, ...other }: Props & HTMLAttributes<HTMLDivEleme
         />
       </section>
       <section className="flex justify-end">
-        <Button onClick={onSave}>{t(isEditMode ? 'update' : 'add')}</Button>
+        <Button disabled={title === '' && description === ''} onClick={onSave}>
+          {t(isEditMode ? 'update' : 'add')}
+        </Button>
       </section>
     </div>
   );

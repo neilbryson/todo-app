@@ -29,7 +29,9 @@ export const TodoPreview = ({
       onClick={onClick}
       {...other}
     >
-      <span className="font-medium text-xl">{data.title}</span>
+      <span className={`font-medium text-xl ${data.title === '' && 'italic text-gray-600'}`}>
+        {data.title || t('untitled')}
+      </span>
       {!hideDate && (
         <span className="text-xs">
           {t('due_date')} <DateDisplay date={data.dueDate} />

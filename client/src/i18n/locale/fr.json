@@ -2,7 +2,7 @@
   "add": "Ajouter",
   "add_task": "Nouvelle tâche",
   "app_title": "Todo",
-  "due_date": "À faire le",
+  "due_date": "À faire",
   "due_date_form": "Date prévue",
   "edit_task": "Modification de la tâche",
   "last_modified_date": "Dernière modification",
@@ -12,5 +12,6 @@
   "task_details": "Notes",
   "today": "Aujourd'hui",
   "tomorrow": "Demain",
+  "untitled": "Sans titre",
   "update": "Mettre à jour"
 }

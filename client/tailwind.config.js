@@ -21,6 +21,8 @@ module.exports = {
   },
   variants: {
     extend: {
+      backgroundColor: ['disabled'],
+      cursor: ['disabled'],
       fontWeight: ['hover'],
       margin: ['first', 'last'],
     },
