@@ -13,6 +13,10 @@
     }
 }
 
+.react-datepicker {
+    @apply font-sans !important;
+}
+
 .react-datepicker-wrapper > .react-datepicker__input-container > input {
     @apply rounded p-1.5 w-full;
 }

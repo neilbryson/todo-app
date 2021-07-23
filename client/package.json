@@ -38,7 +38,7 @@
   "scripts": {
     "build": "vite build",
     "prepare": "cd .. && husky install client/.husky",
-    "preview": "vite preview",
+    "preview": "vite preview --port 12345",
     "start": "vite"
   }
 }
