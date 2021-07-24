@@ -165,7 +165,7 @@ namespace TodoServer.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public IActionResult ChangeDone(string id, bool isDone)
+        public IActionResult ChangeDone(string id, [FromBody] bool isDone)
         {
             _logger.LogInformation("[{ChangeDone} : {Id}] Called", nameof(ChangeDone), id);
 
