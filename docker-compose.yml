@@ -1,0 +1,31 @@
+﻿version: "3.8"
+services:
+  mongodb:
+    container_name: mongodb
+    image: mongo:5.0
+    environment:
+      MONGO_INITDB_DATABASE: TodoDb
+    ports:
+      - "27018:27017"
+    volumes:
+      - ~/todo-app/mongodb:/data/db
+      - ./extras/mongoSetup.js:/docker-entrypoint-initdb.d/mongoSetup.js
+    networks:
+      - mongodb_network
+  server:
+    container_name: todo-app-server
+    build: ./server
+    links:
+      - "mongodb:mongodb"
+    ports:
+      - "5001:443"
+      - "5000:80"
+    networks:
+      - mongodb_network
+networks:
+  mongodb_network:
+    name: mongodb_network
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/16
