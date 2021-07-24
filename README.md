@@ -10,10 +10,31 @@ git clone git@github.com:neilbryson/todo-app.git
 git clone https://github.com/neilbryson/todo-app.git
 ```
 
-## Components
+## Installation
 
-* [client](client/README.md) - Front-end application created with React and TypeScript
-* [server](server/README.md) - .NET 5.0 back-end server
+### Front-end
+
+Refer to [client/README.md](client/README.md)
+
+### Back-end
+
+Follow the steps in [server/README.md](server/README.md)
+
+## Docker build
+
+This comes with a Docker setup which includes the server and the database.
+
+### Building the containers
+
+```bash
+docker-compose up
+```
+
+### Removing the containers
+
+```bash
+docker-compose down
+```
 
 ## License
 MIT
