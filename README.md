@@ -30,6 +30,8 @@ This comes with a Docker setup which includes the server and the database.
 docker-compose up
 ```
 
+The .NET server will be accessible on http://localhost:5000.
+
 ### Removing the containers
 
 ```bash
