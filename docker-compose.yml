@@ -1,4 +1,4 @@
-﻿version: "3.8"
+version: "3.8"
 services:
   mongodb:
     container_name: mongodb
@@ -20,6 +20,8 @@ services:
     networks:
       - mongodb_network
       - app_network
+    extra_hosts:
+      host.docker.internal: host-gateway
 networks:
   mongodb_network:
     name: mongodb_network
