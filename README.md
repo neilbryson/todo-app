@@ -24,6 +24,15 @@ Follow the steps in [server/README.md](server/README.md)
 
 This comes with a Docker setup which includes the server and the database.
 
+### Requirements
+
+#### Windows / Mac
+* [Docker Desktop](https://www.docker.com/products/docker-desktop)
+
+#### Linux
+* [Docker Engine](https://docs.docker.com/engine/install/)
+* [Docker Compose](https://docs.docker.com/compose/install/)
+
 ### Building the containers
 
 ```bash
