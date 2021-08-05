@@ -10,8 +10,6 @@ services:
     volumes:
       - ~/todo-app-db:/data/db
       - ./Extras/:/docker-entrypoint-initdb.d/
-    networks:
-      - mongodb_network
   todo-server:
     container_name: todo_server
     build: .
@@ -19,12 +17,9 @@ services:
       - "50001:443"
       - "50000:80"
     networks:
-      - mongodb_network
-      - app_network
+      - todo_app_network
     extra_hosts:
       host.docker.internal: host-gateway
 networks:
-  mongodb_network:
-    name: mongodb_network
-  app_network:
-    name: app_network
+  todo_app_network:
+    name: todo_app_network
