@@ -1,7 +1,7 @@
 ﻿db.Todo.drop();
 db.Todo.insert({
-  dateLastModified: Date.now(),
-  dueDate: Date.now(),
+  dateLastModified: new Date(),
+  dueDate: new Date(),
   title: 'Sample title',
   description: 'Sample description',
   isDone: true,
