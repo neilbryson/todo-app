@@ -16,10 +16,5 @@ services:
     ports:
       - "50001:443"
       - "50000:80"
-    networks:
-      - todo_app_network
     extra_hosts:
       host.docker.internal: host-gateway
-networks:
-  todo_app_network:
-    name: todo_app_network
