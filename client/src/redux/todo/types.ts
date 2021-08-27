@@ -38,7 +38,7 @@ export interface TodoItem {
   title: string;
 }
 
-export type TodoPriority = Record<'today' | 'overdue' | 'tomorrow' | 'other', string[]>;
+export type TodoPriority = Record<'today' | 'overdue' | 'tomorrow' | 'other' | 'done', string[]>;
 
 export interface TodoState {
   displayType: TodoDisplay;
