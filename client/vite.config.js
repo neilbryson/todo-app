@@ -9,6 +9,7 @@ const config = {
   ],
   server: {
     open: true,
+    port: 43000,
   },
 };
 
