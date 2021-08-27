@@ -1,20 +1,33 @@
 import React, { useState } from 'react';
 
-export const Check = () => {
-  const [checked, setChecked] = useState(false);
+import { TailwindComponent } from '../types/Misc';
 
-  function onClick(e: React.MouseEvent<HTMLInputElement>): void {
-    setChecked(!checked);
+interface Props {
+  checked?: boolean;
+  onClick?: (isChecked: boolean) => void;
+}
+
+export const Check: TailwindComponent<Props, HTMLDivElement, 'className' | 'onClick'> = ({
+  checked = false,
+  onClick,
+  ...other
+}) => {
+  const [isChecked, setIsChecked] = useState(checked);
+
+  function onClickCb(e: React.MouseEvent<HTMLInputElement>): void {
     e.stopPropagation();
+    setIsChecked(!isChecked);
+    if (onClick) onClick(isChecked);
   }
 
   return (
     <div
       className="rounded-full border-2 border-gray-400 h-6 w-6 flex items-center justify-center p-1 box-border"
-      onClick={onClick}
+      onClick={onClickCb}
+      {...other}
     >
-      {checked && <span className="select-none text-blue-900">✔</span>}
-      <input className="hidden" type="checkbox" defaultChecked={checked} />
+      {isChecked && <span className="select-none text-blue-900">✔</span>}
+      <input className="hidden" type="checkbox" defaultChecked={isChecked} />
     </div>
   );
 };
