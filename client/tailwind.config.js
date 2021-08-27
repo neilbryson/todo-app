@@ -10,7 +10,7 @@ module.exports = {
       '2xl': '2400px',
     },
     fontFamily: {
-      sans: ['Comfortaa', 'sans-serif'],
+      sans: ['Atkinson Hyperlegible', 'sans-serif'],
     },
     extend: {
       zIndex: {
