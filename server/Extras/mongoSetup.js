@@ -6,3 +6,4 @@ db.Todo.insert({
   Description: 'Sample description',
   IsDone: true,
 });
+db.Todo.createIndex({ Title: "text", Description: "text" });

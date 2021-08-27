@@ -51,7 +51,7 @@ namespace TodoServer.Controllers
         [HttpGet("{id:length(24)}", Name = "GetTodo")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<TodoItem> Get(string id)
+        public ActionResult<ITodoItem> Get(string id)
         {
             _logger.LogInformation("[{Get} : {Id}] Called", nameof(Get), id);
             var todo = _todoService.Get(id);
@@ -66,10 +66,32 @@ namespace TodoServer.Controllers
             return todo;
         }
 
+        [HttpGet("search")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult<List<TodoItem>> Search([FromQuery] FilterOptionsWithSearch filterOptions)
+        {
+            var searchQuery = filterOptions?.SearchQuery ?? "";
+            var sortBy = filterOptions?.SortBy ?? 1;
+            var pageSize = filterOptions?.PageSize ?? 10;
+            var pageNumber = filterOptions?.PageNumber ?? 1;
+            _logger.LogInformation("[{Search}] Called `{SearchQuery}`", nameof(Search), searchQuery);
+
+            var result = _todoService.Search(searchQuery, sortBy, pageNumber, pageSize);
+
+            if (result == null)
+            {
+                _logger.LogInformation("[{Search}] No results for `{SearchQuery}`", nameof(Search), searchQuery);
+                return new List<TodoItem>();
+            }
+
+            _logger.LogInformation("[{Search}] Success `{SearchQuery}`", nameof(Search), searchQuery);
+            return result;
+        }
+
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<TodoItem> Create(TodoItem todo)
+        public ActionResult<ITodoItem> Create(TodoItem todo)
         {
             _logger.LogInformation("[{Create}] Called", nameof(Create));
 
