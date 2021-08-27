@@ -29,6 +29,13 @@ export function todo(state = initialState, action: TodoActions): TodoState {
         todoList: { ...state.todoList, [action.payload.id]: action.payload },
       };
     }
+    case ThunkActions.CHANGE_DONE_STATUS_SUCCESS: {
+      const { id, isDone } = action.payload;
+      return {
+        ...state,
+        todoList: { ...state.todoList, [id]: { ...state.todoList[id], isDone } },
+      };
+    }
     case ThunkActions.DELETE_TODO_SUCCESS: {
       const todoIds = state.todoIds.filter((id) => id !== action.payload);
       return {

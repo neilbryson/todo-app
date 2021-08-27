@@ -14,6 +14,9 @@ export const enum ThunkActions {
   ADD_TODO_START = '@todo/ADD_TODO_START',
   ADD_TODO_SUCCESS = '@todo/ADD_TODO_SUCCESS',
   ADD_TODO_ERROR = '@todo/ADD_TODO_ERROR',
+  CHANGE_DONE_STATUS_START = '@todo/CHANGE_DONE_STATUS_START',
+  CHANGE_DONE_STATUS_SUCCESS = '@todo/CHANGE_DONE_STATUS_SUCCESS',
+  CHANGE_DONE_STATUS_ERROR = '@todo/CHANGE_DONE_STATUS_ERROR',
   DELETE_TODO_START = '@todo/DELETE_TODO_START',
   DELETE_TODO_SUCCESS = '@todo/DELETE_TODO_SUCCESS',
   DELETE_TODO_ERROR = '@todo/DELETE_TODO_ERROR',
@@ -69,11 +72,18 @@ export type GetTodoListStart = Action<ThunkActions.GET_TODO_LIST_START>;
 export type GetTodoListSuccess = Action<ThunkActions.GET_TODO_LIST_SUCCESS, TodoItem[]>;
 export type GetTodoListError = Action<ThunkActions.GET_TODO_LIST_ERROR>;
 
+export type ChangeDoneStatusStart = Action<ThunkActions.CHANGE_DONE_STATUS_START, Pick<TodoItem, 'id' | 'isDone'>>;
+export type ChangeDoneStatusSuccess = Action<ThunkActions.CHANGE_DONE_STATUS_SUCCESS, Pick<TodoItem, 'id' | 'isDone'>>;
+export type ChangeDoneStatusError = Action<ThunkActions.CHANGE_DONE_STATUS_ERROR>;
+
 export type TodoActions =
   | SetDisplay
   | AddTodoStart
   | AddTodoSuccess
   | AddTodoError
+  | ChangeDoneStatusStart
+  | ChangeDoneStatusSuccess
+  | ChangeDoneStatusError
   | DeleteTodoStart
   | DeleteTodoSuccess
   | DeleteTodoError

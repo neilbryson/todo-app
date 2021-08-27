@@ -81,3 +81,30 @@ export function getTodoList(
     }
   };
 }
+
+export function changeDoneStatus(
+  id: string,
+  isDone: boolean
+): ThunkAction<types.ChangeDoneStatusStart | types.ChangeDoneStatusSuccess | types.ChangeDoneStatusError> {
+  return async (dispatch) => {
+    dispatch({
+      type: types.ThunkActions.CHANGE_DONE_STATUS_START,
+      payload: { id, isDone },
+    });
+
+    try {
+      await api({
+        url: `api/v1/todo/change-done`,
+        method: 'patch',
+        data: { id, isDone },
+      });
+
+      dispatch({
+        payload: { id, isDone },
+        type: types.ThunkActions.CHANGE_DONE_STATUS_SUCCESS,
+      });
+    } catch (e: unknown) {
+      dispatch({ type: types.ThunkActions.CHANGE_DONE_STATUS_ERROR });
+    }
+  };
+}
