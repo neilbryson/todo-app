@@ -23,6 +23,18 @@
 
    # TodoDatabaseSettings.TodoCollectionName
    db.createCollection('Todo')
+   
+   # Add a sample data
+   db.Todo.insert({
+     DateLastModified: new Date(),
+     DueDate: new Date(),
+     Title: 'Sample title',
+     Description: 'Sample description',
+     IsDone: true,
+   });
+   
+   # Create text index (for search)
+   db.Todo.createIndex({ Title: "text", Description: "text" });
    ```
    The database configuration can be modified in the *appsettings.json* file.
 
