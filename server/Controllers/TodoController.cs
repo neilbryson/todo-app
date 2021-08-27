@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -183,39 +184,40 @@ namespace TodoServer.Controllers
             }
         }
 
-        [HttpPatch("change-done/{id:length(24)}")]
+        [HttpPatch("change-done")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public IActionResult ChangeDone(string id, [FromBody] bool isDone)
+        public IActionResult ChangeDone(ChangeDone changeDone)
         {
-            _logger.LogInformation("[{ChangeDone} : {Id}] Called", nameof(ChangeDone), id);
+            _logger.LogInformation("[{ChangeDone} : {Id}] Called", nameof(ChangeDone), changeDone.Id);
+            var json = JsonSerializer.Serialize(changeDone);
 
             try
             {
-                var t = _todoService.Get(id);
+                var t = _todoService.Get(changeDone.Id);
 
                 if (t == null)
                 {
-                    _logger.LogError("[{ChangeDone} : {Id}]", nameof(ChangeDone), id);
+                    _logger.LogError("[{ChangeDone} : {Id}]", nameof(ChangeDone), changeDone.Id);
                     return NoContent();
                 }
 
-                _todoService.Update(id, new TodoItem
+                _todoService.Update(changeDone.Id, new TodoItem
                 {
                     Id = t.Id,
                     Description = t.Description,
                     Title = t.Title,
                     DueDate = t.DueDate,
                     DateLastModified = t.DateLastModified,
-                    IsDone = isDone,
+                    IsDone = changeDone.IsDone,
                 });
-                _logger.LogInformation("[{ChangeDone} : {Id}] Success", nameof(ChangeDone), id);
+                _logger.LogInformation("[{ChangeDone} : {Id}] Success", nameof(ChangeDone), changeDone.Id);
                 return NoContent();
             }
             catch (Exception e)
             {
-                _logger.LogError("[{ChangeDone} : {Id}] Error\n{ErrorMessage}", nameof(ChangeDone), id, e.Message);
+                _logger.LogError("[{ChangeDone} : {Id}] Error\n{ErrorMessage}", nameof(ChangeDone), changeDone.Id, e.Message);
                 return Problem();
             }
         }
