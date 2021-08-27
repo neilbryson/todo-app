@@ -3,7 +3,7 @@ import { Action } from '../../types/Redux';
 export const enum TodoDisplay {
   DEFAULT,
   WITH_DONE,
-  ALL,
+  DONE,
 }
 
 export const enum LocalActions {
