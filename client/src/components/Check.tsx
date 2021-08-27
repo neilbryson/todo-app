@@ -16,8 +16,9 @@ export const Check: TailwindComponent<Props, HTMLDivElement, 'className' | 'onCl
 
   function onClickCb(e: React.MouseEvent<HTMLInputElement>): void {
     e.stopPropagation();
-    setIsChecked(!isChecked);
-    if (onClick) onClick(isChecked);
+    const nextChecked = !isChecked;
+    setIsChecked(nextChecked);
+    if (onClick) onClick(nextChecked);
   }
 
   return (
