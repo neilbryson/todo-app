@@ -13,6 +13,9 @@ module.exports = {
       sans: ['Atkinson Hyperlegible', 'sans-serif'],
     },
     extend: {
+      colors: {
+        translucent: '#e5e7eb87'
+      },
       zIndex: {
         '-1': '-1',
         '-10': '-10',
