@@ -13,9 +13,13 @@ const ModalContainer = (): ReactElement<HTMLDivElement> | null => {
   function render() {
     return (
       <div className="flex justify-center items-center w-screen h-screen relative">
-        <div className="w-screen h-screen bg-gray-200 opacity-60 absolute top-0 -z-1" />
         {modals.modalIds.map((modalId) => (
-          <Modal key={modalId} data={modals.modals[modalId]} />
+          <div
+            className="w-screen h-screen bg-translucent absolute top-0 left-0 flex items-center justify-center"
+            key={modalId}
+          >
+            <Modal data={modals.modals[modalId]} />
+          </div>
         ))}
       </div>
     );

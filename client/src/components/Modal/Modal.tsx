@@ -15,7 +15,7 @@ export const Modal = ({ data, ...other }: Props & HTMLAttributes<HTMLDivElement>
   }
 
   return (
-    <div className="border-2 rounded border-blue-900 bg-blue-200 max-w-lg w-full p-8" {...other}>
+    <div className="border-2 rounded border-blue-900 bg-blue-200 max-w-lg w-full p-8 absolute" {...other}>
       <section className="flex justify-between mb-2.5">
         <h2 className="font-bold text-2xl">{data.title}</h2>
         <span className="cursor-pointer" onClick={closeCb}>
