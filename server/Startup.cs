@@ -73,14 +73,15 @@ namespace TodoServer
         {
             if (env.IsDevelopment())
             {
-                app.UseCors(builder =>
-                {
-                    builder.AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader();
-                });
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            });
 
             app.UseSwagger();
             app.UseSwaggerUI(options =>
