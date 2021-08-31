@@ -1,20 +1,12 @@
-import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
+import { applyMiddleware, combineReducers, createStore } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import thunk from 'redux-thunk';
 
 import { reducers } from './index';
 
-declare global {
-  interface Window {
-    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
-  }
-}
-
 const rootReducer = combineReducers({ ...reducers });
 const middlewares = applyMiddleware(thunk);
-const composeEnhancers =
-  import.meta.env.DEV === true && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    : compose;
-export const store = createStore(rootReducer, composeEnhancers(middlewares));
+const enhancers = composeWithDevTools(middlewares);
+export const store = createStore(rootReducer, enhancers);
 
 export type RootState = ReturnType<typeof store.getState>;
