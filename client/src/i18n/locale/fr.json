@@ -2,6 +2,8 @@
   "add": "Ajouter",
   "add_task": "Nouvelle tâche",
   "app_title": "Todo",
+  "done_date": "Terminée",
+  "done_list": "Terminées",
   "due_date": "À faire",
   "due_date_form": "Date prévue",
   "edit_task": "Modification de la tâche",

@@ -2,6 +2,8 @@
   "add": "Add",
   "add_task": "Add task",
   "app_title": "Todo",
+  "done_date": "Done",
+  "done_list": "Done",
   "due_date": "Due",
   "due_date_form": "Due date",
   "edit_task": "Edit task",
