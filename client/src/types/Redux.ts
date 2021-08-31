@@ -1,5 +1,5 @@
 import type { Action as ReduxAction } from 'redux';
-import type { ThunkAction as TAction, ThunkDispatch } from 'redux-thunk';
+import type { ThunkAction as TAction } from 'redux-thunk';
 
 import type { RootState } from '../redux/configureStore';
 
