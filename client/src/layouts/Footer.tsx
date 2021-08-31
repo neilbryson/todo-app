@@ -1,10 +1,10 @@
 import React, { ReactElement } from 'react';
 
 import { Button } from '../components/Button';
-import { TodoForm } from '../components/TodoForm';
 import { useLocale } from '../contexts/Locale';
 import { useModal } from '../contexts/Modal';
 import { Filter } from './Filter';
+import { TodoForm } from './Modals/TodoForm';
 
 export const Footer = (): ReactElement<HTMLElement> => {
   const { t } = useLocale();

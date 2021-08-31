@@ -4,6 +4,7 @@ import React, { HTMLAttributes, ReactElement, useRef } from 'react';
 import { useLocale } from '../contexts/Locale';
 import { useModal } from '../contexts/Modal';
 import { DeleteTodoModal } from '../layouts/Modals/DeleteTodoModal';
+import { TodoForm } from '../layouts/Modals/TodoForm';
 import { TodoItem } from '../redux/todo/types';
 import { Button } from './Button';
 
@@ -28,6 +29,10 @@ export const TodoDetails = ({
     add({ title: t('delete_title'), content: <DeleteTodoModal todoId={data.id} /> });
   }
 
+  function onClickEdit(): void {
+    add({ title: t('edit_title'), content: <TodoForm data={data} /> });
+  }
+
   return (
     <div {...other}>
       <section className="max-h-64 overflow-auto mb-2.5">{data.description}</section>
@@ -43,8 +48,8 @@ export const TodoDetails = ({
       </section>
       {!data.isDone && (
         <div className="mt-2.5 flex justify-around">
-          <Button>Edit</Button>
-          <Button onClick={onClickDelete}>Delete</Button>
+          <Button onClick={onClickEdit}>{t('edit_title')}</Button>
+          <Button onClick={onClickDelete}>{t('delete_title')}</Button>
         </div>
       )}
     </div>

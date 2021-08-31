@@ -3,13 +3,13 @@ import React, { HTMLAttributes, ReactElement, useState } from 'react';
 import Datepicker from 'react-datepicker';
 import { useDispatch } from 'react-redux';
 
-import { useLocale } from '../contexts/Locale';
-import { useModal } from '../contexts/Modal';
-import { addTodo, editTodo } from '../redux/todo/actions';
-import { TodoItem } from '../redux/todo/types';
-import { Button } from './Button';
-import { TextArea } from './TextArea';
-import { TextField } from './TextField';
+import { Button } from '../../components/Button';
+import { TextArea } from '../../components/TextArea';
+import { TextField } from '../../components/TextField';
+import { useLocale } from '../../contexts/Locale';
+import { useModal } from '../../contexts/Modal';
+import { addTodo, editTodo } from '../../redux/todo/actions';
+import { TodoItem } from '../../redux/todo/types';
 
 interface Props {
   data?: TodoItem;
@@ -18,9 +18,9 @@ interface Props {
 export const TodoForm = ({ data, ...other }: Props & HTMLAttributes<HTMLDivElement>): ReactElement<HTMLDivElement> => {
   const isEditMode = typeof data !== 'undefined';
   const dispatch = useDispatch();
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [dueDate, setSelectedDate] = useState(new Date());
+  const [title, setTitle] = useState(data?.title ?? '');
+  const [description, setDescription] = useState(data?.description ?? '');
+  const [dueDate, setSelectedDate] = useState(data?.dueDate ? dayjs(data.dueDate).toDate() : new Date());
   const { localeCode, t } = useLocale();
   const { closeAll } = useModal();
 
@@ -56,9 +56,9 @@ export const TodoForm = ({ data, ...other }: Props & HTMLAttributes<HTMLDivEleme
     <div className="flex flex-col">
       <section className="flex flex-col mb-2.5" {...other}>
         {generateFormTitle(t('task'))}
-        <TextField onChange={onChangeTitle} />
+        <TextField onChange={onChangeTitle} defaultValue={title} />
         {generateFormTitle(t('task_details'))}
-        <TextArea onChange={onChangeNotes} />
+        <TextArea onChange={onChangeNotes} defaultValue={description} />
         {generateFormTitle(t('due_date_form'))}
         <Datepicker
           dateFormat="Pp"
