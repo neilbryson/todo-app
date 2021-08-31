@@ -209,7 +209,7 @@ namespace TodoServer.Controllers
                     Description = t.Description,
                     Title = t.Title,
                     DueDate = t.DueDate,
-                    DateLastModified = t.DateLastModified,
+                    DateLastModified = DateTime.Now,
                     IsDone = changeDone.IsDone,
                 });
                 _logger.LogInformation("[{ChangeDone} : {Id}] Success", nameof(ChangeDone), changeDone.Id);
