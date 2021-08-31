@@ -1,7 +1,11 @@
 {
   "add": "Ajouter",
   "add_task": "Nouvelle tâche",
+  "affirmative": "Oui",
   "app_title": "Todo",
+  "cancel": "Annuler",
+  "delete_confirm": "Voulez-vous vraiment supprimer cette tâche ?",
+  "delete_title": "Suppression de la tâche",
   "done_date": "Terminée",
   "done_list": "Terminées",
   "due_date": "À faire",

@@ -1,7 +1,11 @@
 {
   "add": "Add",
   "add_task": "Add task",
+  "affirmative": "Yes",
   "app_title": "Todo",
+  "cancel": "Cancel",
+  "delete_confirm": "Are you sure you want to delete this task?",
+  "delete_title": "Delete",
   "done_date": "Done",
   "done_list": "Done",
   "due_date": "Due",
