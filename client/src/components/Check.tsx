@@ -4,11 +4,13 @@ import { TailwindComponent } from '../types/Misc';
 
 interface Props {
   checked?: boolean;
+  disabled?: boolean;
   onClick?: (isChecked: boolean) => void;
 }
 
 export const Check: TailwindComponent<Props, HTMLDivElement, 'className' | 'onClick'> = ({
   checked = false,
+  disabled = false,
   onClick,
   ...other
 }) => {
@@ -16,6 +18,7 @@ export const Check: TailwindComponent<Props, HTMLDivElement, 'className' | 'onCl
 
   function onClickCb(e: React.MouseEvent<HTMLInputElement>): void {
     e.stopPropagation();
+    if (disabled) return;
     const nextChecked = !isChecked;
     setIsChecked(nextChecked);
     if (onClick) onClick(nextChecked);
@@ -28,7 +31,7 @@ export const Check: TailwindComponent<Props, HTMLDivElement, 'className' | 'onCl
       {...other}
     >
       {isChecked && <span className="select-none text-blue-900">✔</span>}
-      <input className="hidden" type="checkbox" defaultChecked={isChecked} />
+      <input className="hidden" disabled={disabled} type="checkbox" defaultChecked={isChecked} />
     </div>
   );
 };
