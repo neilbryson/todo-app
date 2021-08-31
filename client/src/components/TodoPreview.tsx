@@ -22,12 +22,16 @@ export const TodoPreview = ({
   const dispatch = useDispatch();
   const { t } = useLocale();
   const { add } = useModal();
+  const [dateString, dateUpdated] = data.isDone
+    ? [t('done_date'), data.dateLastModified]
+    : [t('due_date'), data.dueDate];
 
   function onClickPreview(): void {
     add({ title: data.title, content: <TodoDetails data={data} /> });
   }
 
   function onClickCheck(isDone: boolean): void {
+    if (data.isDone) return;
     dispatch(changeDoneStatus(data.id, isDone));
   }
 
@@ -39,7 +43,7 @@ export const TodoPreview = ({
       onClick={onClickPreview}
       {...other}
     >
-      <Check checked={data.isDone} onClick={onClickCheck} />
+      <Check checked={data.isDone} disabled={data.isDone} onClick={onClickCheck} />
       <div className="flex justify-between items-center ml-4 w-full">
         <span
           className={`font-medium text-xl ${data.title === '' && 'italic text-gray-600'} ${
@@ -50,7 +54,7 @@ export const TodoPreview = ({
         </span>
         {!hideDate && (
           <span className="text-xs">
-            {t('due_date')} <DateDisplay date={data.dueDate} />
+            {dateString} <DateDisplay date={dateUpdated} />
           </span>
         )}
       </div>

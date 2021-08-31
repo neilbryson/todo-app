@@ -64,7 +64,7 @@ export const TodoList = (): ReactElement<HTMLDivElement> => {
   function renderTodoDone(): ReturnType<typeof renderSection> | null {
     if (todoPriority.done.length === 0 || displayType === TodoDisplay.DEFAULT) return null;
     return renderSection(
-      t('done'),
+      t('done_list'),
       todoPriority.done.map((id) => <TodoPreview data={todoList[id]} key={id} />)
     );
   }

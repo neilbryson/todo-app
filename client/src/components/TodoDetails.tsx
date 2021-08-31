@@ -24,9 +24,11 @@ export const TodoDetails = ({
     <div {...other}>
       <section className="max-h-64 overflow-auto mb-2.5">{data.description}</section>
       <section className="text-xs">
-        <div>
-          {t('due_date')} {formatDate(dueDate.current)}
-        </div>
+        {!data.isDone && (
+          <div>
+            {t('due_date')} {formatDate(dueDate.current)}
+          </div>
+        )}
         <div>
           {t('last_modified_date')} {formatDate(dateLastModified.current)}
         </div>
