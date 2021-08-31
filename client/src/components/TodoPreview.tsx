@@ -31,7 +31,6 @@ export const TodoPreview = ({
   }
 
   function onClickCheck(isDone: boolean): void {
-    if (data.isDone) return;
     dispatch(changeDoneStatus(data.id, isDone));
   }
 
@@ -43,7 +42,7 @@ export const TodoPreview = ({
       onClick={onClickPreview}
       {...other}
     >
-      <Check checked={data.isDone} disabled={data.isDone} onClick={onClickCheck} />
+      <Check checked={data.isDone} onClick={onClickCheck} />
       <div className="flex justify-between items-center ml-4 w-full">
         <span
           className={`font-medium text-xl ${data.title === '' && 'italic text-gray-600'} ${
