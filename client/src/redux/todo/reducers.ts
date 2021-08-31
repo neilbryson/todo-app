@@ -1,8 +1,10 @@
+import dayjs from 'dayjs';
+
 import { ThunkActions, TodoActions, TodoDisplay, TodoState } from './types';
 import { getDatePriority, organiseTodoList, updatePriority } from './utilities';
 
 export const initialState: TodoState = {
-  displayType: TodoDisplay.DEFAULT,
+  displayType: TodoDisplay.DONE,
   todoIds: [],
   todoList: {},
   todoPriority: {
@@ -33,8 +35,11 @@ export function todo(state = initialState, action: TodoActions): TodoState {
       const { id, isDone } = action.payload;
       return {
         ...state,
-        todoList: { ...state.todoList, [id]: { ...state.todoList[id], isDone } },
-        todoPriority: updatePriority({ operation: 'move', transferTo: 'done', id }, state.todoPriority),
+        todoList: {
+          ...state.todoList,
+          [id]: { ...state.todoList[id], isDone, dateLastModified: dayjs().toISOString() },
+        },
+        todoPriority: updatePriority({ operation: 'move', id, transferTo: 'done' }, state.todoPriority),
       };
     }
     case ThunkActions.DELETE_TODO_SUCCESS: {

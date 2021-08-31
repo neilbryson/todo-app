@@ -41,7 +41,7 @@ export function organiseTodoList(todoItems: TodoItem[]): Omit<TodoState, 'displa
   const { todoPriority, todoIds, todoList } = todoItems.reduce<Omit<TodoState, 'displayType'>>(
     (prev, curr) => {
       const datePriority = getDatePriority(curr);
-      prev.todoPriority[datePriority].push(curr.id);
+      if (datePriority) prev.todoPriority[datePriority].push(curr.id);
       prev.todoIds.push(curr.id);
       prev.todoList[curr.id] = curr;
       return prev;
