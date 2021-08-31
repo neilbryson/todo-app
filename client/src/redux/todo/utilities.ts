@@ -3,28 +3,20 @@ import dayjs from 'dayjs';
 import { initialState } from './reducers';
 import { TodoItem, TodoPriority, TodoState } from './types';
 
-type UpdatePriorityParams =
-  | { operation: 'move'; id: string; transferTo: keyof TodoPriority }
-  | { operation: 'delete'; id: string; transferTo?: never };
+interface RebuildPriorityParams {
+  data: Record<string, TodoItem>;
+  ids: string[];
+}
 
-export function updatePriority(params: UpdatePriorityParams, todoPriority: TodoPriority): TodoPriority {
-  return Object.keys(todoPriority).reduce<TodoPriority>(
+export function rebuildPriority(params: RebuildPriorityParams): TodoPriority {
+  const { data = {}, ids = [] } = params;
+  return ids.reduce<TodoPriority>(
     (prev, curr) => {
-      const key = curr as keyof TodoPriority;
-      if (params.operation === 'delete') {
-        if (todoPriority[key].includes(params.id)) prev[key] = todoPriority[key].filter((k) => k !== params.id);
-        else prev[key] = todoPriority[key];
-        return prev;
-      }
-      if (params.operation === 'move' && params.transferTo === key) {
-        prev[key] = [...todoPriority[key], params.id];
-        return prev;
-      }
-      if (todoPriority[key].includes(params.id)) prev[key] = todoPriority[key].filter((k) => k !== params.id);
-      else prev[key] = todoPriority[key];
+      const datePriority = getDatePriority(data[curr]);
+      prev[datePriority].push(curr);
       return prev;
     },
-    { done: [], overdue: [], today: [], tomorrow: [], other: [] }
+    { done: [], today: [], overdue: [], tomorrow: [], other: [] }
   );
 }
 

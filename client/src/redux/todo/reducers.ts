@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 
 import { LocalActions, ThunkActions, TodoActions, TodoDisplay, TodoItem, TodoState } from './types';
-import { getDatePriority, organiseTodoList, updatePriority } from './utilities';
+import { getDatePriority, organiseTodoList, rebuildPriority } from './utilities';
 
 export const initialState: TodoState = {
   displayType: TodoDisplay.DEFAULT,
@@ -33,27 +33,41 @@ export function todo(state = initialState, action: TodoActions): TodoState {
         todoList: { ...state.todoList, [action.payload.id]: action.payload },
       };
     }
-    case ThunkActions.CHANGE_DONE_STATUS_SUCCESS: {
-      const { id, isDone } = action.payload;
+    case ThunkActions.EDIT_TODO_SUCCESS: {
+      const { dateLastModified, id, ...other } = action.payload;
+      const nextTodoList = { ...state.todoList, [id]: { ...state.todoList[id], ...other, dateLastModified } };
+      const nextTodoPriority = rebuildPriority({ ids: state.todoIds, data: nextTodoList });
       return {
         ...state,
-        todoList: {
-          ...state.todoList,
-          [id]: { ...state.todoList[id], isDone, dateLastModified: dayjs().toISOString() },
-        },
-        todoPriority: updatePriority({ operation: 'move', id, transferTo: 'done' }, state.todoPriority),
+        todoList: nextTodoList,
+        todoPriority: nextTodoPriority,
+      };
+    }
+    case ThunkActions.CHANGE_DONE_STATUS_SUCCESS: {
+      const { id, isDone } = action.payload;
+      const nextTodoList = {
+        ...state.todoList,
+        [id]: { ...state.todoList[id], isDone, dateLastModified: dayjs().toISOString() },
+      };
+      const nextTodoPriority = rebuildPriority({ ids: state.todoIds, data: nextTodoList });
+      return {
+        ...state,
+        todoList: nextTodoList,
+        todoPriority: nextTodoPriority,
       };
     }
     case ThunkActions.DELETE_TODO_SUCCESS: {
-      const todoIds = state.todoIds.filter((id) => id !== action.payload);
+      const nextTodoIds = state.todoIds.filter((id) => id !== action.payload);
+      const nextTodoList = nextTodoIds.reduce<Record<string, TodoItem>>((prev, curr) => {
+        prev[curr] = state.todoList[curr];
+        return prev;
+      }, {});
+      const nextTodoPriority = rebuildPriority({ ids: nextTodoIds, data: nextTodoList });
       return {
         ...state,
-        todoPriority: updatePriority({ operation: 'delete', id: action.payload }, state.todoPriority),
-        todoList: todoIds.reduce<Record<string, TodoItem>>((prev, curr) => {
-          prev[curr] = state.todoList[curr];
-          return prev;
-        }, {}),
-        todoIds,
+        todoPriority: nextTodoPriority,
+        todoList: nextTodoList,
+        todoIds: nextTodoIds,
       };
     }
     case ThunkActions.GET_TODO_LIST_SUCCESS: {
