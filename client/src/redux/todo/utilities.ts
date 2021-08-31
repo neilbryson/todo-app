@@ -13,6 +13,7 @@ export function updatePriority(params: UpdatePriorityParams, todoPriority: TodoP
       const key = curr as keyof TodoPriority;
       if (params.operation === 'delete') {
         if (todoPriority[key].includes(params.id)) prev[key] = todoPriority[key].filter((k) => k !== params.id);
+        else prev[key] = todoPriority[key];
         return prev;
       }
       if (params.operation === 'move' && params.transferTo === key) {

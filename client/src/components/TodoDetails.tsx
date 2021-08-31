@@ -2,7 +2,10 @@ import dayjs from 'dayjs';
 import React, { HTMLAttributes, ReactElement, useRef } from 'react';
 
 import { useLocale } from '../contexts/Locale';
+import { useModal } from '../contexts/Modal';
+import { DeleteTodoModal } from '../layouts/Modals/DeleteTodoModal';
 import { TodoItem } from '../redux/todo/types';
+import { Button } from './Button';
 
 interface Props {
   data: TodoItem;
@@ -15,9 +18,14 @@ export const TodoDetails = ({
   const { t } = useLocale();
   const dueDate = useRef(dayjs(data.dueDate));
   const dateLastModified = useRef(dayjs(data.dateLastModified));
+  const { add } = useModal();
 
   function formatDate(date: dayjs.Dayjs): string {
     return date.format('DD MMMM YYYY HH:mm:ss');
+  }
+
+  function onClickDelete(): void {
+    add({ title: t('delete_title'), content: <DeleteTodoModal todoId={data.id} /> });
   }
 
   return (
@@ -33,6 +41,12 @@ export const TodoDetails = ({
           {t('last_modified_date')} {formatDate(dateLastModified.current)}
         </div>
       </section>
+      {!data.isDone && (
+        <div className="mt-2.5 flex justify-around">
+          <Button>Edit</Button>
+          <Button onClick={onClickDelete}>Delete</Button>
+        </div>
+      )}
     </div>
   );
 };

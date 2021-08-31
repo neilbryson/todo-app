@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 
-import { LocalActions, ThunkActions, TodoActions, TodoDisplay, TodoState } from './types';
+import { LocalActions, ThunkActions, TodoActions, TodoDisplay, TodoItem, TodoState } from './types';
 import { getDatePriority, organiseTodoList, updatePriority } from './utilities';
 
 export const initialState: TodoState = {
@@ -49,7 +49,10 @@ export function todo(state = initialState, action: TodoActions): TodoState {
       return {
         ...state,
         todoPriority: updatePriority({ operation: 'delete', id: action.payload }, state.todoPriority),
-        // TODO remove from todoList
+        todoList: todoIds.reduce<Record<string, TodoItem>>((prev, curr) => {
+          prev[curr] = state.todoList[curr];
+          return prev;
+        }, {}),
         todoIds,
       };
     }
