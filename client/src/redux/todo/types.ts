@@ -1,9 +1,9 @@
 import { Action } from '../../types/Redux';
 
 export const enum TodoDisplay {
-  DEFAULT,
-  WITH_DONE,
-  DONE,
+  DEFAULT = 'filter_default',
+  WITH_DONE = 'filter_with_done',
+  DONE = 'filter_done',
 }
 
 export const enum LocalActions {

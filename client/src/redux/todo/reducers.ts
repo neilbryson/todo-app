@@ -1,10 +1,10 @@
 import dayjs from 'dayjs';
 
-import { ThunkActions, TodoActions, TodoDisplay, TodoState } from './types';
+import { LocalActions, ThunkActions, TodoActions, TodoDisplay, TodoState } from './types';
 import { getDatePriority, organiseTodoList, updatePriority } from './utilities';
 
 export const initialState: TodoState = {
-  displayType: TodoDisplay.DONE,
+  displayType: TodoDisplay.DEFAULT,
   todoIds: [],
   todoList: {},
   todoPriority: {
@@ -18,6 +18,8 @@ export const initialState: TodoState = {
 
 export function todo(state = initialState, action: TodoActions): TodoState {
   switch (action.type) {
+    case LocalActions.SET_DISPLAY:
+      return { ...state, displayType: action.payload };
     case ThunkActions.ADD_TODO_SUCCESS: {
       const priority = getDatePriority(action.payload);
       const newTodoPriority = {

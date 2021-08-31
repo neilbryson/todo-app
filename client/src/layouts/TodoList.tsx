@@ -30,7 +30,7 @@ export const TodoList = (): ReactElement<HTMLDivElement> => {
   }
 
   function renderTodoToday(): ReturnType<typeof renderSection> | null {
-    if (todoPriority.today.length === 0) return null;
+    if (todoPriority.today.length === 0 || displayType === TodoDisplay.DONE) return null;
     return renderSection(
       t('today'),
       todoPriority.today.map((id) => <TodoPreview data={todoList[id]} key={id} hideDate />)
@@ -38,7 +38,7 @@ export const TodoList = (): ReactElement<HTMLDivElement> => {
   }
 
   function renderTodoTomorrow(): ReturnType<typeof renderSection> | null {
-    if (todoPriority.tomorrow.length === 0) return null;
+    if (todoPriority.tomorrow.length === 0 || displayType === TodoDisplay.DONE) return null;
     return renderSection(
       t('tomorrow'),
       todoPriority.tomorrow.map((id) => <TodoPreview data={todoList[id]} key={id} hideDate />)
@@ -46,7 +46,7 @@ export const TodoList = (): ReactElement<HTMLDivElement> => {
   }
 
   function renderTodoOverdue(): ReturnType<typeof renderSection> | null {
-    if (todoPriority.overdue.length === 0) return null;
+    if (todoPriority.overdue.length === 0 || displayType === TodoDisplay.DONE) return null;
     return renderSection(
       t('overdue'),
       todoPriority.overdue.map((id) => <TodoPreview data={todoList[id]} key={id} />)
@@ -54,7 +54,7 @@ export const TodoList = (): ReactElement<HTMLDivElement> => {
   }
 
   function renderTodoOther(): ReturnType<typeof renderSection> | null {
-    if (todoPriority.other.length === 0) return null;
+    if (todoPriority.other.length === 0 || displayType === TodoDisplay.DONE) return null;
     return renderSection(
       t('other_todo'),
       todoPriority.other.map((id) => <TodoPreview data={todoList[id]} key={id} />)
@@ -70,7 +70,7 @@ export const TodoList = (): ReactElement<HTMLDivElement> => {
   }
 
   return (
-    <div className="mb-4 overflow-y-auto">
+    <div className="mb-4 overflow-y-auto flex-1">
       {renderTodoToday()}
       {renderTodoTomorrow()}
       {renderTodoOverdue()}
