@@ -6,6 +6,7 @@ interface ModalContextProps {
   add: (props: Omit<ModalItem, 'id'>) => void;
   close: (id: string) => void;
   closeAll: () => void;
+  closeLast: () => void;
   modals: ModalState;
 }
 
@@ -19,6 +20,7 @@ export const ModalContext = createContext<ModalContextProps>({
   add: noOp,
   close: noOp,
   closeAll: noOp,
+  closeLast: noOp,
   modals: initialState,
 });
 
@@ -29,6 +31,10 @@ export const ModalProvider = ({ children }: ModalProviderProps): ReturnType<type
   const add = useCallback((props: Omit<ModalItem, 'id'>) => dispatch({ type: 'ADD', payload: props }), []);
   const close = useCallback((id: string) => dispatch({ type: 'CLOSE', payload: id }), []);
   const closeAll = useCallback(() => dispatch({ type: 'CLOSE_ALL', payload: undefined }), []);
-  const contextValue = useMemo(() => ({ add, close, closeAll, modals: state }), [add, close, closeAll, state]);
+  const closeLast = useCallback(() => dispatch({ type: 'CLOSE_LAST', payload: undefined }), []);
+  const contextValue = useMemo(
+    () => ({ add, close, closeAll, closeLast, modals: state }),
+    [add, close, closeAll, closeLast, state]
+  );
   return <ModalContext.Provider value={contextValue}>{children}</ModalContext.Provider>;
 };

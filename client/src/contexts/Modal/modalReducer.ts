@@ -15,7 +15,11 @@ export interface ModalState {
 
 type Action<A extends string, P extends unknown> = { type: A; payload: P };
 
-type ActionTypes = Action<'ADD', Omit<ModalItem, 'id'>> | Action<'CLOSE', string> | Action<'CLOSE_ALL', undefined>;
+type ActionTypes =
+  | Action<'ADD', Omit<ModalItem, 'id'>>
+  | Action<'CLOSE', string>
+  | Action<'CLOSE_ALL', undefined>
+  | Action<'CLOSE_LAST', undefined>;
 
 export const initialState: ModalState = {
   modalIds: [],
@@ -41,6 +45,17 @@ export function modalReducer(state: ModalState, action: ActionTypes): ModalState
         { modalIds: [], modals: {} }
       );
       return { modalIds, modals };
+    }
+    case 'CLOSE_LAST': {
+      const last = state.modalIds[state.modalIds.length - 1];
+      return {
+        modalIds: state.modalIds.filter((id) => id !== last),
+        modals: state.modalIds.reduce<Record<string, ModalItem>>((prev, curr) => {
+          if (state.modals[curr].id === last) return prev;
+          prev[curr] = state.modals[curr];
+          return prev;
+        }, {}),
+      };
     }
     case 'CLOSE_ALL':
       return initialState;
