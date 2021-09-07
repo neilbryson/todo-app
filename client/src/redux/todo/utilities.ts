@@ -39,7 +39,7 @@ export function organiseTodoList(todoItems: TodoItem[]): Omit<TodoState, 'displa
       prev.todoList[curr.id] = curr;
       return prev;
     },
-    { todoPriority: { ...initialState.todoPriority }, todoIds: [], todoList: {} }
+    { todoPriority: { done: [], today: [], overdue: [], tomorrow: [], other: [] }, todoIds: [], todoList: {} }
   );
   return { todoIds, todoList, todoPriority };
 }
